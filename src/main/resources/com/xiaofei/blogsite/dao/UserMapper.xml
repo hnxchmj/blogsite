@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.xiaofei.blogsite.model.User">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="encrypted_password" jdbcType="VARCHAR" property="encryptedPassword" />
     <result column="display_name" jdbcType="VARCHAR" property="displayName" />
     <result column="email" jdbcType="VARCHAR" property="email" />
     <result column="mobile" jdbcType="VARCHAR" property="mobile" />
@@ -13,7 +14,8 @@
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, username, display_name, email, mobile, is_male, birthday, create_time, update_time
+    id, username, encrypted_password, display_name, email, mobile, is_male, birthday, 
+    create_time, update_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -21,19 +23,25 @@
     from user
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="selectByUsername" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user
+    where username = #{username,jdbcType=VARCHAR}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from user
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.xiaofei.blogsite.model.User">
-    insert into user (id, username, display_name, 
-      email, mobile, is_male, 
-      birthday, create_time, update_time
-      )
-    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{displayName,jdbcType=VARCHAR}, 
-      #{email,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{isMale,jdbcType=BIT}, 
-      #{birthday,jdbcType=DATE}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
-      )
+    insert into user (id, username, encrypted_password, 
+      display_name, email, mobile, 
+      is_male, birthday, create_time, 
+      update_time)
+    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{encryptedPassword,jdbcType=VARCHAR}, 
+      #{displayName,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
+      #{isMale,jdbcType=BIT}, #{birthday,jdbcType=DATE}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.xiaofei.blogsite.model.User">
     insert into user
@@ -43,6 +51,9 @@
       </if>
       <if test="username != null">
         username,
+      </if>
+      <if test="encryptedPassword != null">
+        encrypted_password,
       </if>
       <if test="displayName != null">
         display_name,
@@ -73,6 +84,9 @@
       <if test="username != null">
         #{username,jdbcType=VARCHAR},
       </if>
+      <if test="encryptedPassword != null">
+        #{encryptedPassword,jdbcType=VARCHAR},
+      </if>
       <if test="displayName != null">
         #{displayName,jdbcType=VARCHAR},
       </if>
@@ -102,6 +116,9 @@
       <if test="username != null">
         username = #{username,jdbcType=VARCHAR},
       </if>
+      <if test="encryptedPassword != null">
+        encrypted_password = #{encryptedPassword,jdbcType=VARCHAR},
+      </if>
       <if test="displayName != null">
         display_name = #{displayName,jdbcType=VARCHAR},
       </if>
@@ -129,6 +146,7 @@
   <update id="updateByPrimaryKey" parameterType="com.xiaofei.blogsite.model.User">
     update user
     set username = #{username,jdbcType=VARCHAR},
+      encrypted_password = #{encryptedPassword,jdbcType=VARCHAR},
       display_name = #{displayName,jdbcType=VARCHAR},
       email = #{email,jdbcType=VARCHAR},
       mobile = #{mobile,jdbcType=VARCHAR},

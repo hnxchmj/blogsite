@@ -1,15 +1,11 @@
-package com.xiaofei.blogsite.model;
+package com.xiaofei.blogsite.dto;
 
 import java.util.Date;
 
-public class User {
+public class UserShowDTO {
     private Integer id;
 
     private String username;
-
-    private String password;
-
-    private String encryptedPassword;
 
     private String displayName;
 
@@ -22,8 +18,6 @@ public class User {
     private Date birthday;
 
     private Date createTime;
-
-    private Date updateTime;
 
     public Integer getId() {
         return id;
@@ -41,13 +35,6 @@ public class User {
         this.username = username == null ? null : username.trim();
     }
 
-    public String getEncryptedPassword() {
-        return encryptedPassword;
-    }
-
-    public void setEncryptedPassword(String encryptedPassword) {
-        this.encryptedPassword = encryptedPassword == null ? null : encryptedPassword.trim();
-    }
 
     public String getDisplayName() {
         return displayName;
@@ -97,19 +84,4 @@ public class User {
         this.createTime = createTime;
     }
 
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }
